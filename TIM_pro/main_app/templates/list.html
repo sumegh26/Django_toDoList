@@ -1,0 +1,33 @@
+{% extends 'base.html'  %}
+
+{% block title %}
+    <title>List data</title>
+{% endblock %}
+
+{% block content%}
+<!--    <h2>DATA</h2>-->
+<!--{% if user.is_authenticated %}-->
+    <h2>{{ ls.name }}</h2>
+    <form method="post" action="#"> <!-- Here action="#" means the info is send back to the same page, unlike form in create page -->
+        {% csrf_token  %}
+    <ul>
+    {% for item in ls.item_set.all %}
+            {% if item.complete == True %}
+                <li>
+<!--                {{ item.text }}    :    COMPLETE-->
+                   <input type="checkbox", value="clicked", name="c{{item.id}}" checked>{{ item.text }}
+                </li>
+            {% else %}
+                <li>
+<!--                {{ item.text }}    :    INCOMPLETE-->
+                  <input type="checkbox", value="clicked", name="c{{item.id}}" >{{ item.text }}
+                </li>
+            {% endif %}
+    {% endfor%}
+     </ul>
+        <button type="submit", name="save", value="submit">Save</button>
+        <input type="text" name="newItemName">
+        <button type="submit", name="AddNewItem", value="NewItem">Add New Item</button>
+        </form>
+<!--{% endif %}-->
+{% endblock %}
